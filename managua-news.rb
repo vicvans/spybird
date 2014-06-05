@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'rubygems'
-requite 'bundler'
+require 'bundler'
 
 get '/' do
   "It works"
