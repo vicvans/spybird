@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>asd</title>
+	</head>
+	<body>
+		<h1>Ruby</h1>
+		<h2><%=  @cosa %></h2>
+	</body>
+</html>
+
+
+
+<%=  @statuses.each {|t| t.text} %>
+
+<% @statuses.each do |trash| %>
+<%= "#{trash.text}\n"%><br>
+<% end %>
+
+
+
+
+<%
+@statuses=[]
+TweetStream::Client.new.track('fail') do |status|
+	puts "[#{status.user.screen_name}] #{status.text}"
+	@statuses << status
+	puts @statuses
+	client.stop if @statuses.size >=5
+end
+%>	
