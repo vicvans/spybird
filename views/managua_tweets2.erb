@@ -12,25 +12,27 @@
 		<h1>Ruby</h1>
 		<h2>Tweets of Managua LIVE</h2>
 
-		<table class="table table-striped">
-		<tr class="table_header">
-			<th>[@Usr]</th>
-			<th>Content</th>
-		</tr>
-			<%
-				@statuses=[]
-				TweetStream::Client.new.track(par) do |status,client|
-					puts "[#{status.user.screen_name}] #{status.text}"
-					@statuses << status
-			%>
-			<tr>
-					<td><%="[#{status.user.screen_name}]"%></td>
-					<td><%="#{status.text}"%></td>
-			</tr>
-			<%
-					client.stop if @statuses.size >=15
-				end
-			%>	
+		<table class="table table-striped" id="main_cont">
+			<tbody>
+				<tr class="table_header">
+					<th>[@Usr]</th>
+					<th>Content</th>
+				</tr>
+					<%
+						@statuses=[]
+						TweetStream::Client.new.track('like') do |status,client|
+							puts "[#{status.user.screen_name}] #{status.text}"
+							@statuses << status
+					%>
+					<tr>
+							<td><%="[#{status.user.screen_name}]"%></td>
+							<td><%="#{status.text}"%></td>
+					</tr>
+					<%
+							client.stop if @statuses.size >=15
+						end
+					%>
+			</tbody>	
 		</table>
 	</body>
 </html>
