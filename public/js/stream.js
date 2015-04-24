@@ -6,10 +6,9 @@ $(document).ready(function(){
 				url: "/render_tweets.json",
 				dataType: 'json',
 				success:function(response){
-					// console.log(response);
-					// console.log(response.text);
+					console.log(response);
 					$tweet = response.text;
-					$username = response.screen_name;
+					$username = response.user.screen_name;
 					$("table").append("<tr><td>"+$username+"</td><td>"+$tweet+"</td></tr>");
 				}
 			});
