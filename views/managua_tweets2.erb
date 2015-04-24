@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>Managua Tweets</title>
+		<%= include_gon %>
 		<link rel="stylesheet" type="text/css" href=
 		"/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/custom.css">
@@ -9,19 +10,22 @@
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<h1>Ruby</h1>
-		<h2>Tweets of Managua LIVE</h2>
-
+		<div class="col-md-12">
+			<h1 class="text-center"><a href="/">SpyBird!</a></h1>
+			<h2 class="text-center">Tweets about <%= term %> LIVE!</h2>
+		</div>
+		<div class="col-md-offset-6">
+			<button id="btn-stop" type="button" class="btn btn-info">Stop Stream</button>
+		</div>
 		<table class="table table-striped" id="main_cont">
 			<tbody>
 				<tr class="table_header">
 					<th>[@Usr]</th>
-					<th>Content</th>
+					<th>Tweet</th>
 				</tr>
 					<%
 						@statuses=[]
-						TweetStream::Client.new.track('like') do |status,client|
-							puts "[#{status.user.screen_name}] #{status.text}"
+						TweetStream::Client.new.track(term) do |status,client|
 							@statuses << status
 					%>
 					<tr>

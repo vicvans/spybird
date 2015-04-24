@@ -1,3 +1,30 @@
-<html>
-	<%= Time.now %>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>SpyBird</title>
+		<link rel="stylesheet" type="text/css" href=
+		"/css/bootstrap.min.css">
+		<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="col-md-12">
+			<h1 class="text-center">SpyBird!</h1>
+			<h3 class="text-center">Track and find out what people is tweeting!</h3>
+			<h5 class="text-center">Ptsss.. is <%= Time.now %> right now</h5>
+		</div>
+		<div class="col-md-12">
+			<form method="get" action="/track">
+					<div class="text-center form-group">
+						<label>Enter the word you wanna track</label>
+						<div class="">
+							<input name="term" type="text" class="form-control text-center" placeholder="Neko">
+						</div>
+					</div>
+						<button type="submit" class="btn btn-primary btn-lg btn-block">Track!</button>
+			</form>
+		</div>
+	</body>
 </html>
