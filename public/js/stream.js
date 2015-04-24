@@ -8,7 +8,9 @@ $(document).ready(function(){
 					console.log(response);
 					$tweet = response.text;
 					$username = response.user.screen_name;
-					$("table").append("<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>");
+					// $("table").append("<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>");
+					var row = "<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>"
+					$(row).hide().appendTo("table").fadeIn(700);
 				}
 			});
 	}
