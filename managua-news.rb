@@ -57,6 +57,10 @@ end
 not_found do
 	"Hey watt'cha doing here?"
 end
+
+get '/secret/nyawnya' do
+	erb :secureto
+end
 #------------------------------------------------------
 # Not working ways----------------------
 #Standar way

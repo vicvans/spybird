@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>SpyBird</title>
+		<link rel="stylesheet" type="text/css" href=
+		"/css/bootstrap.min.css">
+		<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<% phrases=["Nyawwwww x3!!!","I love you so muuch!! mon amour!!!! >w<","Quien es la mejor nekita del mundo! Mi kathy-chan <3!!!","Nyaww prrr* ","Enjoy a bleu super day!! <3"] %>
+		<% show_phrase = phrases[rand(4)] %>
+		<div class="col-md-12">
+			<h2 class="text-center">Welcome! >w<</h1>
+			<hr class="dashed ">
+			<h1 style="color:#1B8DFF" class="text-center"><%= show_phrase %></h1>
+			<hr class="dashed ">
+		</div>
+	</body>
+</html>
