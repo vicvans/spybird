@@ -11,10 +11,10 @@ require 'gon-sinatra'
 Sinatra::register Gon::Sinatra
 
 TweetStream.configure do |config|
-	config.consumer_key = 'ZgWljSLf5Ph7XdFZmNwHDpOc2'
-	config.consumer_secret = 'aaHQquxOYUmpV5ZqUUMqZawPS0jjwRwUhLfHmU9ExdKuRc2NWR'
-	config.oauth_token = '147727273-zi68INXwRiIx0uGG9CgbBQRzvcnyyJM8qn9enIpj'
-	config.oauth_token_secret = 'CnWW3I8TMhbrYirqiFCtCrXh4ipmwMYppR3YYIJG6ibxj'
+	config.consumer_key = ENV['spy_bird_consumer_key']
+	config.consumer_secret = ENV['spy_bird_consumer_secret']
+	config.oauth_token = ENV['spy_bird_oauth_token']
+	config.oauth_token_secret = ENV['spy_bird_oauth_token_secret']
 	config.auth_method = :oauth
 end
 # Extract and convert tweet from api to json
@@ -24,7 +24,7 @@ def render_tweet(term)
 		result << status
 		client.stop if result.size>=1;
 	end
-	result[0].attrs.to_json
+	result[0].attrs.to_json unless result.nil?
 end
 
 get '/' do
