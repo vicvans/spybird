@@ -5,12 +5,15 @@ $(document).ready(function(){
 				url: "/render_tweets.json/"+gon.this_var,
 				dataType: 'json',
 				success:function(response){
-					console.log(response);
-					$tweet = response.text;
-					$username = response.user.screen_name;
-					// $("table").append("<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>");
-					var row = "<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>"
-					$(row).hide().appendTo("table").fadeIn(700);
+					if (response.success == true){
+						$tweet = response.text;
+						$username = response.user.screen_name;
+						var row = "<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>";
+						$(row).hide().appendTo("table").fadeIn(700);
+					}
+					else{
+						console.log("Requesting....");
+					}
 				}
 			});
 	}

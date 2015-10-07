@@ -20,11 +20,24 @@ end
 # Extract and convert tweet from api to json
 def render_tweet(term)
 	result=[];
-	TweetStream::Client.new.track(term) do |status,client|
-		result << status
-		client.stop if result.size>=1;
+	begin
+		TweetStream::Client.new.track(term) do |status,client|
+			result << status
+			client.stop if result.size>=1;
+		end
+		unless result[0].nil?
+			puts "OK"
+			t = result[0].attrs
+			t[:success] = true
+			return t.to_json
+		else
+			puts "NO"
+			return {success: false}.to_json
+		end
+	rescue Timeout::Error
+		puts "TIMEOUT"
+		return {success: false}.to_json
 	end
-	result[0].attrs.to_json unless result.nil?
 end
 
 get '/' do
