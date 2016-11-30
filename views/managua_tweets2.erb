@@ -1,40 +1,59 @@
-<html>
-	<head>
-		<title>Managua Tweets</title>
-		<%= include_gon %>
-		<link rel="stylesheet" type="text/css" href=
-		"/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/css/custom.css">
-		<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="/js/stream.js"></script>
-		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-		<div class="col-lg-12">
-			<h1 class="text-center"><a href="/">SpyBird!</a></h1>
-			<h2 class="text-center">Tweets about <%= term %> LIVE!</h2>
-		</div>
-		<button id="btn-stop" type="button" class="btn btn-info btn-block">Stop Stream</button>
-		<table class="table table-striped" id="main_cont">
-			<tbody>
-				<tr class="table_header">
-					<th>[@Usr]</th>
-					<th>Tweet</th>
-				</tr>
-					<%
-						@statuses=[]
-						TweetStream::Client.new.track(term) do |status,client|
-							@statuses << status
-					%>
-					<tr>
-							<td><%="[#{status.user.screen_name}]"%></td>
-							<td><%="#{status.text}"%></td>
-					</tr>
-					<%
-							client.stop if @statuses.size >=10
-						end
-					%>
-			</tbody>	
-		</table>
-	</body>
-</html>
+<script type="text/javascript">
+	$(document).ready(function(){
+	function streamUpdate(){
+			console.log("Time!");
+			$.ajax({
+				type: "GET",
+				url: "/render_tweets.json",
+				dataType: 'json',
+				data: {term: "<%= term %>"},
+				success:function(response){
+					if (response.success == true){
+						$tweet = response.text;
+						$username = response.user.screen_name;
+						var row = "<tr><td>["+$username+"]</td><td>"+$tweet+"</td></tr>";
+						$(row).hide().appendTo("#tweetsTable tbody").fadeIn(700);
+					}
+					else{
+						console.log("Requesting....");
+					}
+				}
+			});
+	}
+	var tid = setInterval(streamUpdate,8000);
+	$("#btn-stop").click(function(){
+		abortStream();
+		alert("Stream stopped!");
+	});
+	function abortStream(){
+		clearInterval(tid);
+	}
+});
+</script>
+
+<div class="col-md-12">
+	<h1 class="text-xs-center"><a href="/">SpyBird!</a></h1>
+	<h2 class="text-xs-center">Tweets about <%= term %> placeholder LIVE!</h2>
+</div>
+<button id="btn-stop" type="button" class="btn btn-info btn-block">Stop Stream</button>
+<table class="table table-striped" id="tweetsTable">
+	<tbody>
+		<tr class="table_header">
+			<th>[@Usr]</th>
+			<th>Tweet</th>
+		</tr>
+			<%
+				@statuses=[]
+				TweetStream::Client.new.track(term) do |status,client|
+					@statuses << status
+			%>
+			<tr>
+					<td><%="[#{status.user.screen_name}]"%></td>
+					<td><%="#{status.text}"%></td>
+			</tr>
+			<%
+					client.stop if @statuses.size >=3
+				end
+			%>
+	</tbody>	
+</table>
